@@ -1,8 +1,4 @@
-# Disease Diagnosis App
+This application predicts common illnesses based on patient symptoms using a machine-learning ensemble model.
+It combines Random Forest, XGBoost, and LightGBM models trained on a dataset of over 32,000 patient records.
 
-This app predicts common illnesses (e.g., malaria) based on patient symptoms.  
-It uses an ensemble of Random Forest, XGBoost, and LightGBM models trained on a dataset of ~150,000 patients.
-
-## How to Run
-- Install requirements: `pip install -r requirements.txt`
-- Run app: `streamlit run app.py`
+The app loads all model files directly from the repository (no external downloads needed).

@@ -1,44 +1,12 @@
-import os
-
-# =========================
-# Clean old model files
-# =========================
-for file in ["rf_tuned.pkl", "xgb_tuned.pkl", "lgb_tuned.pkl", 
-             "label_encoder.pkl", "feature_list.json"]:
-    if os.path.exists(file):
-        os.remove(file)
-
-
 import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
-import gdown
-import os
 import json
 from sklearn.preprocessing import LabelEncoder
 
 # =========================
-# Download Models from Google Drive
-# =========================
-def download_file(url, output):
-    if not os.path.exists(output):
-        gdown.download(url, output, quiet=False)
-
-# Google Drive Direct Links
-files_to_download = {
-    "rf_tuned.pkl": "https://drive.google.com/file/d/1xaNNx4WLivfNVi5dEX5XUYqEuKewiw3P/view?usp=sharing",
-    "xgb_tuned.pkl": "https://drive.google.com/file/d/1aM5IBsE6XP6URZp_x5EG3RHOIZbLUgpM/view?usp=sharing",
-    "lgb_tuned.pkl": "https://drive.google.com/file/d/115xw51iXHNV8QZJC7TmCZvxmm5P_jpsD/view?usp=sharing",
-    "label_encoder.pkl": "https://drive.google.com/file/d/187bkRL9-lNGjC0wNuLW7734Bv1txXXSD/view?usp=sharing",
-    "feature_list.json": "https://drive.google.com/file/d/1a94Qwnin0O1e5CJsIDwb0Zj_GnFFWYw1/view?usp=sharing"
-}
-
-for file_name, url in files_to_download.items():
-    download_file(url, file_name)
-
-# =========================
-# Load Models + Encoders
+# Load Models + Encoder + Feature List (Local Files)
 # =========================
 rf_model = joblib.load("rf_tuned.pkl")
 xgb_model = joblib.load("xgb_tuned.pkl")
@@ -48,7 +16,7 @@ label_encoder: LabelEncoder = joblib.load("label_encoder.pkl")
 with open("feature_list.json", "r") as f:
     feature_list = json.load(f)
 
-# Sort symptoms alphabetically for UI
+# Sort symptoms alphabetically for cleaner UI
 feature_list_sorted = sorted(feature_list)
 
 # =========================
@@ -104,5 +72,3 @@ if st.sidebar.button("Predict Disease"):
 
 else:
     st.info("👉 Select symptoms from the sidebar and click **Predict Disease**")
-
-
